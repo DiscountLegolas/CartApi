@@ -1,4 +1,5 @@
 ﻿using CartApi.Data;
+using CartApi.Data.Repositorys;
 using Ninject;
 using Ninject.Extensions.ChildKernel;
 using System;
@@ -54,6 +55,7 @@ namespace CartApi
         {
             kernel.Bind<IProductRepo>().To<ProductRepo>().InSingletonScope();
             kernel.Bind<ICartRepo>().To<CartRepo>().InSingletonScope();
+            kernel.Bind<IUserRepo>().To<UserRepo>().InSingletonScope();
             return kernel;
         }
     }

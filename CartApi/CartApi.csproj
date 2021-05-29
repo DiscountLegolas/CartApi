@@ -103,6 +103,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\CartContext.cs" />
     <Compile Include="Data\Repositorys\ICartRepo.cs" />
     <Compile Include="Data\Repositorys\IProductRepo.cs" />
@@ -110,12 +111,15 @@
     <Compile Include="Data\Models\Product.cs" />
     <Compile Include="Data\Models\ProductIncart.cs" />
     <Compile Include="Data\Models\User.cs" />
+    <Compile Include="Data\Repositorys\IUserRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddProductToCartVM.cs" />
     <Compile Include="Models\CartViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="NinjectResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
