@@ -1,6 +1,8 @@
 ﻿using CartApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,9 +38,14 @@ namespace CartApi.Data
                 a.SaveChanges();
             }
         }
-
         public CartViewModel GetProductsıncart(int userid)
         {
+            Func<byte[], Image> turnbytearraytoımage = a =>
+             {
+                 MemoryStream ms = new MemoryStream(a);
+                 Image returnImage = Image.FromStream(ms);
+                 return returnImage;
+             };
             List<ProductViewModel> products = null;
             using (var context=new CartContext())
             {
@@ -48,7 +55,7 @@ namespace CartApi.Data
                     ProductId = x.Product.ProductId,
                     Name = x.Product.Name,
                     Description = x.Product.Description,
-                    Price = x.Product.Price*x.Quantity
+                    Price = x.Product.Price*x.Quantity,
                 }).ToList();
             }
             CartViewModel cartViewModel = new CartViewModel() { ProductsInCart = products };

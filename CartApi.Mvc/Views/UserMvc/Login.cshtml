@@ -1,0 +1,14 @@
+﻿@model CartApi.Mvc.Models.UserLogin
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.TextBoxFor(x => x.UserName)
+    <br />
+    <br />
+    @Html.TextBoxFor(x => x.Password)
+    <button type="submit">Giriş Yap</button>
+}

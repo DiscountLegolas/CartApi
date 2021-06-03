@@ -1,6 +1,8 @@
 ﻿using CartApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,12 @@ namespace CartApi.Data
     {
         public ProductViewModel GetProduct(int id)
         {
+            Func<byte[], Image> turnbytearraytoımage = a =>
+            {
+                MemoryStream ms = new MemoryStream(a);
+                Image returnImage = Image.FromStream(ms);
+                return returnImage;
+            };
             ProductViewModel product = null;
             using (CartContext context = new Data.CartContext())
             {

@@ -24,7 +24,8 @@ namespace CartApi.Data.Repositorys
                 user = new UserViewModel()
                 {
                     UserId = a.UserId,
-                    UserName = a.Username
+                    UserName = a.Username,
+                    Password=a.Password
                 };
             }
             return user;

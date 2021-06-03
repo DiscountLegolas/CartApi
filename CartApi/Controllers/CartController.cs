@@ -9,6 +9,8 @@ using System.Web.Http;
 
 namespace CartApi.Controllers
 {
+    [Authorize]
+    [RoutePrefix("api/Cart")]
     public class CartController : ApiController
     {
         private ICartRepo _repo;
@@ -17,6 +19,7 @@ namespace CartApi.Controllers
             _repo = repo;
         }
         [HttpPost]
+        [Route("AddItem")]
         public IHttpActionResult PostProductToCart(AddProductToCartVM productIncart)
         {
             _repo.AddItemToCart(productIncart);

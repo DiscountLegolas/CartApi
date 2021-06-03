@@ -18,7 +18,7 @@ namespace CartApi.Data
         public DbSet<ProductIncart> ProductIncarts { get; set; }
         public DbSet<User> Users { get; set; }
     }
-    public class CartDbİnit:CreateDatabaseIfNotExists<CartContext>
+    public class CartDbİnit:DropCreateDatabaseIfModelChanges<CartContext>
     {
         protected override void Seed(CartContext context)
         {
