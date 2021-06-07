@@ -31,9 +31,10 @@ namespace CartApi.Controllers
             var a = _repo.GetProductsıncart(id);
             if (a.ProductsInCart.Count==0)
             {
-                return Ok<String>("Sepette Ürün Yok");
+                HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Sepette Ürün Yok") };
+                return ResponseMessage(message);
             }
-            return Ok(a);
+            return Json(a);
         }
     }
 }

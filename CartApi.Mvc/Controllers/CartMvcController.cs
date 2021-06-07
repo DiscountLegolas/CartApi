@@ -10,6 +10,7 @@ using System.Net.Http.Formatting;
 
 namespace CartApi.Mvc.Controllers
 {
+    [Authorize]
     public class CartMvcController:Controller
     {
         public ActionResult AddItemToCart(int id)
@@ -31,6 +32,10 @@ namespace CartApi.Mvc.Controllers
                 f.Wait();
             }
             return RedirectToAction("Index", "UserMvc");
+        }
+        public ActionResult CartPage()
+        {
+            return View();
         }
     }
 }

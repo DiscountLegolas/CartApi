@@ -20,8 +20,24 @@ namespace CartApi.Controllers
         [HttpPost]
         public IHttpActionResult PostRegister(RegisterViewModel register)
         {
-            _repo.Register(register);
-            return Ok();
+            try
+            {
+                var a=_repo.Register(register);
+                if (a)
+                {
+                    HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.Created);
+                    return ResponseMessage(message);
+                }
+                else
+                {
+                    HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Aynı Kullanıcı Adına Sahip Başka Bir Kullanıcı Var") };
+                    return ResponseMessage(message);
+                }
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
         }
         [Route("api/user/login")]
         [HttpPost]
@@ -30,11 +46,12 @@ namespace CartApi.Controllers
             var user = _repo.GetUser(login);
             if (user==null)
             {
-                return Ok<string>("Cant Find");
+                HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent("Kullanıcı Bulunamadı") };
+                return ResponseMessage(message);
             }
             else
             {
-                return Ok(user);
+                return Json(user);
             }
         }
     }

@@ -18,23 +18,20 @@ namespace CartApi.Data
     {
         public ProductViewModel GetProduct(int id)
         {
-            Func<byte[], Image> turnbytearraytoımage = a =>
-            {
-                MemoryStream ms = new MemoryStream(a);
-                Image returnImage = Image.FromStream(ms);
-                return returnImage;
-            };
             ProductViewModel product = null;
             using (CartContext context = new Data.CartContext())
             {
-                var a = context.Products.First(X => X.ProductId == id);
-                product = new ProductViewModel()
+                if (context.Products.Any(X => X.ProductId == id))
                 {
-                    ProductId = a.ProductId,
-                    Name = a.Name,
-                    Description = a.Description,
-                    Price = a.Price,
-                };
+                    var a = context.Products.First(X => X.ProductId == id);
+                    product = new ProductViewModel()
+                    {
+                        ProductId = a.ProductId,
+                        Name = a.Name,
+                        Description = a.Description,
+                        Price = a.Price,
+                    };
+                }
             }
             return product;
         }

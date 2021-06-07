@@ -11,7 +11,7 @@ namespace CartApi.Data.Repositorys
     public interface IUserRepo
     {
         UserViewModel GetUser(LoginViewModel login);
-        void Register(RegisterViewModel register);
+        bool Register(RegisterViewModel register);
     }
     public class UserRepo : IUserRepo
     {
@@ -20,27 +20,26 @@ namespace CartApi.Data.Repositorys
             UserViewModel user = null;
             using (var context=new CartContext())
             {
-                var a = context.Users.Single(x => x.Username == login.LoginUserName && x.Password == login.LoginPassword);
-                user = new UserViewModel()
+                if (context.Users.Any(x => x.Username == login.LoginUserName && x.Password == login.LoginPassword))
                 {
-                    UserId = a.UserId,
-                    UserName = a.Username,
-                    Password=a.Password
-                };
+                    var a = context.Users.Single(x => x.Username == login.LoginUserName && x.Password == login.LoginPassword);
+                    user = new UserViewModel()
+                    {
+                        UserId = a.UserId,
+                        UserName = a.Username,
+                        Password = a.Password
+                    };
+                }
             }
             return user;
         }
 
-        public void Register(RegisterViewModel register)
+        public bool Register(RegisterViewModel register)
         {
             Random random = new Random();
             using (CartContext context = new CartContext())
             {
-                if (context.Users.Any(x => x.Username == register.RegisterUserName && x.Password == register.RegisterPassword))
-                {
-
-                }
-                else
+                if (!context.Users.Any(x => x.Username == register.RegisterUserName))
                 {
                     Cart cart = new Cart() { CartId = random.Next() };
                     context.Carts.Add(cart);
@@ -48,6 +47,11 @@ namespace CartApi.Data.Repositorys
                     context.Users.Add(user);
                     context.SaveChanges();
                     context.Dispose();
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }

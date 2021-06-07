@@ -6,11 +6,20 @@ using System.Web;
 using System.Web.Mvc;
 using CartApi.Models;
 using System.Net.Http;
+using ServiceStack.Redis;
+using System.Web.Security;
+using CartApi.Mvc.DataAccess.InterFaces;
+using System.Text.RegularExpressions;
 
 namespace CartApi.Mvc.Controllers
 {
     public class UserMvcController : Controller
     {
+        private IUserService _service;
+        public UserMvcController(IUserService service)
+        {
+            _service = service;
+        }
         // GET: UserMvc
         public ActionResult Index()
         {
@@ -27,17 +36,22 @@ namespace CartApi.Mvc.Controllers
         [HttpPost]
         public ActionResult Login(UserLogin login)
         {
-            var a = new LoginViewModel() { LoginUserName = login.UserName, LoginPassword = login.Password };
-            using (HttpClient httpClient=new HttpClient())
+            var response = _service.Login(login);
+            switch (response.StatusCode)
             {
-                var posttask = httpClient.PostAsJsonAsync<LoginViewModel>("https://localhost:44386/api/user/login", a);
-                posttask.Wait();
-                if (posttask.Result.IsSuccessStatusCode)
-                { 
-                    Session["User"] = posttask.Result.Content.ReadAsAsync<UserViewModel>().Result;
+                case System.Net.HttpStatusCode.OK:
+                    FormsAuthentication.SetAuthCookie(login.UserName,false);
+                    var user = response.Content.ReadAsAsync<UserViewModel>().Result;
+                    HttpCookie cookie = new HttpCookie("user", user.UserId.ToString());
+                    Response.Cookies.Add(cookie);
                     return RedirectToAction("Index", "UserMvc");
-                }
-                return View(login);
+                case System.Net.HttpStatusCode.NotFound:
+                    var error = response.Content.ReadAsStringAsync().Result;
+                    ViewBag.Error = error;
+                    return View(login);
+                default:
+                    ViewBag.Error = "Bilinmeyen Hata Oluştu";
+                    return View(login);
             }
         }
         public ActionResult Register()
@@ -45,13 +59,34 @@ namespace CartApi.Mvc.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel register)
         {
-            var a = new RegisterViewModel() { RegisterUserName = register.UserName, RegisterPassword = register.Password };
-            using (HttpClient client=new HttpClient())
+            if (ModelState.IsValid)
             {
-                var postregister = client.PostAsJsonAsync<RegisterViewModel>("https://localhost:44386/api/user/register", a);
-                postregister.Wait();
+                var a = new RegisterViewModel() { RegisterUserName = register.UserName, RegisterPassword = register.Password };
+                using (HttpClient client = new HttpClient())
+                {
+                    var postregister = client.PostAsJsonAsync<RegisterViewModel>("https://localhost:44386/api/user/register", a);
+                    postregister.Wait();
+                    if (postregister.Result.StatusCode==System.Net.HttpStatusCode.Created)
+                    {
+                        return RedirectToAction("Login", "UserMvc");
+                    }
+                    else if(postregister.Result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        var error = postregister.Result.Content.ReadAsStringAsync().Result;
+                        ViewBag.HataSebep = error;
+                        return View(register);
+                    }
+                    else
+                    {
+                        ViewBag.HataSebep = "Bilinmeyen Bir Hata Oluştu Lütfen Tekrar Deneyin";
+                        return View(register);
+                    }
+                }
             }
-            return RedirectToAction("Login", "UserMvc");
+            else
+            {
+                return View(register);
+            }
         }
     }
 }

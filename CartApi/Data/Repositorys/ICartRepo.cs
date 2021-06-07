@@ -40,12 +40,6 @@ namespace CartApi.Data
         }
         public CartViewModel GetProductsıncart(int userid)
         {
-            Func<byte[], Image> turnbytearraytoımage = a =>
-             {
-                 MemoryStream ms = new MemoryStream(a);
-                 Image returnImage = Image.FromStream(ms);
-                 return returnImage;
-             };
             List<ProductViewModel> products = null;
             using (var context=new CartContext())
             {

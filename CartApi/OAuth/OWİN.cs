@@ -1,5 +1,4 @@
-﻿using CartApi.OAuth;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
@@ -7,9 +6,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Linq;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 [assembly: OwinStartup(typeof(CartApi.OAuth.OWİN))]
 namespace CartApi.OAuth

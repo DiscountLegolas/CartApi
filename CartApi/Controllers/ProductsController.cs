@@ -24,7 +24,7 @@ namespace CartApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(products);
+            return Json(products);
         }
         [HttpGet]
         public IHttpActionResult GetProduct(int id)
@@ -32,9 +32,10 @@ namespace CartApi.Controllers
             ProductViewModel product = _repo.GetProduct(id);
             if (product==null)
             {
-                return NotFound();
+                HttpResponseMessage message = new HttpResponseMessage(HttpStatusCode.NotFound) { Content=new StringContent("Ürün Bulunamadı")};
+                return ResponseMessage(message);
             }
-            return Ok(product);
+            return Json(product);
         }
     }
 }
