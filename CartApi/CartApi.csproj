@@ -217,6 +217,9 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\CartContext.cs" />
+    <Compile Include="Data\Models\HizmetVerir.cs" />
+    <Compile Include="Data\Models\Kategori.cs" />
+    <Compile Include="Data\Models\Marka.cs" />
     <Compile Include="Data\Repositorys\ICartRepo.cs" />
     <Compile Include="Data\Repositorys\IProductRepo.cs" />
     <Compile Include="Data\Models\Cart.cs" />
@@ -227,8 +230,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddProductToCartVM.cs" />
+    <Compile Include="Models\AddProductViewModel.cs" />
     <Compile Include="Models\CartViewModel.cs" />
+    <Compile Include="Models\KategoriPopulerlik.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />

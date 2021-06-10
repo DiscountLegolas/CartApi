@@ -36,5 +36,12 @@ namespace CartApi.Controllers
             }
             return Json(a);
         }
+        [HttpGet]
+        [Route("Recomendations/{id}")]
+        public IHttpActionResult GetRecomendations(int id)
+        {
+            var reco = _repo.GetRecomendations(id);
+            return Ok(reco);
+        }
     }
 }

@@ -14,6 +14,10 @@ namespace CartApi.Data.Models
         [Required]
         public string Description { get; set; }
         public double Price { get; set; }
+        public int MarkaId { get; set; }
+        public virtual Marka Marka { get; set; }
+        public int KategoriId { get; set; }
+        public virtual Kategori Kategori { get; set; }
         public virtual ICollection<ProductIncart> CartsThatHavaProduct { get; set; }
     }
 }

@@ -65,14 +65,59 @@ namespace UnitTestProject1
             var form = new Dictionary<string, string>
                {
                    {"grant_type", "password"},
-                   {"username", "Ozgur1998"},
-                   {"password", "1998-_8b"},
+                   {"username", "faff"},
+                   {"password", "Pass"},
                };
             var token = client.PostAsync("https://localhost:44386/token", new FormUrlEncodedContent(form)).Result.Content.ReadAsAsync<Token>().Result;
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.AccessToken);
-            var getcart = client.GetAsync("https://localhost:44386/api/Cart/5").Result.Content.ReadAsStringAsync().Result;
+            var getcart = client.PostAsJsonAsync("https://localhost:44386/api/Cart/AddItem", new AddProductToCartVM() { UserId=1,ProductId=1}).Result.Content.ReadAsStringAsync().Result;
             Console.WriteLine(getcart);
         }
+        [TestMethod]
+        public void ProductsTest()
+        {
+            HttpClient client = new HttpClient();
+            var a = client.GetAsync("https://localhost:44386/api/products");
+            a.Wait();
+            var response = a.Result;
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            var list = response.Content.ReadAsAsync<IList<ProductViewModel>>().Result;
+            Assert.IsTrue(list.Count > 0);
+            foreach (var item in list)
+            {
+                var url= "https://localhost:44386/api/products/"+item.ProductId;
+                var indivudualresponse = client.GetAsync(url).Result;
+                var obj = indivudualresponse.Content.ReadAsAsync<ProductViewModel>().Result;
+                Assert.IsNotNull(obj);
+            }
+        }
+        [TestMethod]
+        public void ÖneriTest()
+        {
+            HttpClient client = new HttpClient();
+            var form = new Dictionary<string, string>
+               {
+                   {"grant_type", "password"},
+                   {"username", "faff"},
+                   {"password", "Pass"},
+               };
+            var token = client.PostAsync("https://localhost:44386/token", new FormUrlEncodedContent(form)).Result.Content.ReadAsAsync<Token>().Result;
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.AccessToken);
+            var getrepo = client.GetAsync("https://localhost:44386/api/Cart/Recomendations/1").Result.Content.ReadAsAsync<List<ProductViewModel>>().Result;
+            Assert.IsTrue(getrepo.Count > 0);
+        }
+        [TestMethod]
+        public void AddProductTest()
+        {
+            var httpclient = new HttpClient();
+            AddProductViewModel add = new AddProductViewModel() { Name = "UnitTest", Description = "Desc", KategoriId = 1, MarkaId = 1, Price = 30.435 };
+            var a=httpclient.PostAsJsonAsync("https://localhost:44386/api/products", add);
+            a.Wait();
+            Assert.IsTrue(a.Result.IsSuccessStatusCode);
+        }
+        public void UpdateProductTest()
+        {
 
+        }
     }
 }
