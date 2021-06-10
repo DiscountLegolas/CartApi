@@ -65,10 +65,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CartApi.Mvc\CartApi.Mvc.csproj">
-      <Project>{82FACF3D-C4CF-4388-BEFC-4C32EE2BA6C7}</Project>
-      <Name>CartApi.Mvc</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CartApi\CartApi.csproj">
       <Project>{8119f8b7-5c81-4f33-95a0-414e1f8f5c5d}</Project>
       <Name>CartApi</Name>
