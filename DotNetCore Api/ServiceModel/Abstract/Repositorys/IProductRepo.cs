@@ -9,6 +9,7 @@ namespace DotNetCore_Api.Repotutories.Abstract
 {
     public interface IProductRepo
     {
+
         void DeleteProduct(int id);
         Product UpdateProduct(Product producttoupdate);
         void AddProduct(Product add);

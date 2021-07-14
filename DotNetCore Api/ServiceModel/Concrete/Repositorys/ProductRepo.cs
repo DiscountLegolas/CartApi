@@ -12,18 +12,27 @@ namespace DotNetCore_Api.Repotutories.Concrete
 {
     public class ProductRepo : IProductRepo
     {
-        private List<Product> products;
+        private List<Product> _products;
         private CartDbcontext _context;
         public ProductRepo(CartDbcontext context)
         {
             context.Database.EnsureCreated();
             _context = context;
-            products = _context.Products.Include(x => x.Kategori).Include(x => x.Marka).ToList();
+            _products = _context.Products.Include(x => x.Kategori).Include(x => x.Marka).ToList();
         }
         public void AddProduct(Product product)
         {
             _context.Products.Add(product);
             _context.SaveChanges();
+        }
+
+        public List<Product> ApplyFiltersToProducts(IList<Product> products, List<Filter> filters)
+        {
+            foreach (var item in filters)
+            {
+                //products = item.GetFilteredProducts(products.ToList());
+            }
+            return products.ToList();
         }
 
         public void DeleteProduct(int id)
@@ -35,16 +44,16 @@ namespace DotNetCore_Api.Repotutories.Concrete
         public Product GetProduct(int id)
         {
             Product product = null;
-            if (products.Any(X => X.ProductId == id))
+            if (_products.Any(X => X.ProductId == id))
             {
-                product = products.FirstOrDefault(X => X.ProductId == id);
+                product = _products.FirstOrDefault(X => X.ProductId == id);
             }
             return product;
         }
 
         public IList<Product> GetProducts()
         {
-            var products = this.products;
+            var products = this._products;
             return products;
         }
         public Product UpdateProduct(Product updatedatas)

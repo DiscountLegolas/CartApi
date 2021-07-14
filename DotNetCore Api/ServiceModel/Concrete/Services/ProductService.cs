@@ -21,6 +21,12 @@ namespace DotNetCore_Api.ServiceModel.Concrete
             _productrepo.DeleteProduct(id);
         }
 
+        public List<Product> GetMostEconomicProducts()
+        {
+            var products = _productrepo.GetProducts();
+            return products.OrderBy(x => x.Price / x.OriginalPrice).TakeWhile(x=>(x.Price/x.OriginalPrice)<0.7).ToList();
+        }
+
         public Product GetProduct(int id)
         {
             return _productrepo.GetProduct(id);

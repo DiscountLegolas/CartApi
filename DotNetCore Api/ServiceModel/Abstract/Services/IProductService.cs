@@ -8,6 +8,7 @@ namespace DotNetCore_Api.Servicesandrepostitories.Abstract
 {
     public interface IProductService
     {
+        List<Product> GetMostEconomicProducts();
         void DeleteProduct(int id);
         IList<Product> GetProducts();
         Product UpdateProduct(Product updatemodel);

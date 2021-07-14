@@ -4,16 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotNetCore_Api.EfCore.Models
+namespace DotNetCore_Api.Models.RequestModels
 {
-    public class User
+    public class LoginRequestDto
     {
-        public int UserId { get; set; }
         [Required]
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
-        public virtual Cart Cart { get; set; }
-        public virtual ICollection<Favori> Favoriler { get; set; }
     }
 }

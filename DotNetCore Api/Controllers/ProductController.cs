@@ -27,9 +27,8 @@ namespace DotNetCore_Api.Controllers
         [HttpGet("GetProducts")]
         public IActionResult GetAllProducts()
         {
-            var product = _service.GetProducts();
-            var pvms = _mapper.Map<IList<Product>, List<ProductViewModel>>(product);
-            return Ok(pvms);
+            var products = _service.GetProducts();
+            return Ok(products);
         }
         [HttpGet("GetProduct/{id}")]
         public IActionResult GetProduct(int id)
@@ -39,16 +38,14 @@ namespace DotNetCore_Api.Controllers
             {
                 return NotFound("Aradığınız Ürün Bulunamadı");
             }
-            var pvm = _mapper.Map<ProductViewModel>(product);
-            return Ok(pvm);
+            return Ok(product);
         }
         [HttpPut("UpdateProduct")]
-        public IActionResult UpdateProduct([FromBody] UpdateProductDto add)
+        public IActionResult UpdateProduct([FromBody] UpdateProductRequestDto add)
         {
-            var product = _mapper.Map<UpdateProductDto, Product>(add);
+            var product = _mapper.Map<UpdateProductRequestDto, Product>(add);
             var prdct = _service.UpdateProduct(product);
-            var prdctvm = _mapper.Map<ProductViewModel>(prdct);
-            return Ok(prdctvm);
+            return Ok(prdct);
         }
         [HttpPost("AddProduct")]
         public IActionResult AddProduct([FromBody] AddProductRequestDto add)
@@ -57,7 +54,10 @@ namespace DotNetCore_Api.Controllers
             {
                 return BadRequest(ModelState.Values.SelectMany(x=>x.Errors.Select(a=>a.ErrorMessage)).ToList());
             }
-
+            else
+            {
+                return Ok();
+            }
         }
     }
 }

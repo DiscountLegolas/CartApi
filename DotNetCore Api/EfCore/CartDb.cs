@@ -20,5 +20,10 @@ namespace DotNetCore_Api.EfCore
         public DbSet<HizmetVerir> HizmetVerirs { get; set; }
         public DbSet<Marka> Markas { get; set; }
         public DbSet<Kategori> Kategoris { get; set; }
+        public DbSet<Favori> Favoris { get; set; }
+        public DbSet<Özellik> Özelliks { get; set; }
+        public DbSet<HasÖzellik> HasÖzelliks { get; set; }
+        public DbSet<Filter> Filters { get; set; }
+        public DbSet<AppliesTo> AppliesTos { get; set; }
     }
 }

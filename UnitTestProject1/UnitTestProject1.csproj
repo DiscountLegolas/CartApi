@@ -66,8 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CartApi\CartApi.csproj">
-      <Project>{8119f8b7-5c81-4f33-95a0-414e1f8f5c5d}</Project>
+      <Project>{8119F8B7-5C81-4F33-95A0-414E1F8F5C5D}</Project>
       <Name>CartApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetCore Api\DotNetCore Api.csproj">
+      <Project>{acebcfe0-155b-441d-b8b0-c13db224e308}</Project>
+      <Name>DotNetCore Api</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
