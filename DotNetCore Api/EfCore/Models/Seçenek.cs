@@ -1,10 +1,18 @@
-﻿namespace DotNetCore_Api.EfCore.Models
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DotNetCore_Api.EfCore.Models
 {
     public class Seçenek
     {
-        public int SeçenekId { get; set; }
-        public string Yazı { get; set; }
-        public int KategoriId { get; set; }
-        public virtual Kategori Kategori { get; set; }
+        [ForeignKey("Özellik")]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int FilterId { get; set; }
+        public virtual Filter Filter { get; set; }
+        public virtual Özellik Özellik { get; set; }
     }
 }

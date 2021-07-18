@@ -4,14 +4,16 @@ using DotNetCore_Api.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DotNetCore_Api.Migrations
 {
     [DbContext(typeof(CartDbcontext))]
-    partial class CartDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20210716194952_CreateSeçenek")]
+    partial class CreateSeçenek
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -25,5 +25,6 @@ namespace DotNetCore_Api.EfCore
         public DbSet<HasÖzellik> HasÖzelliks { get; set; }
         public DbSet<Filter> Filters { get; set; }
         public DbSet<AppliesTo> AppliesTos { get; set; }
+        public DbSet<Seçenek> Seçenekler { get; set; }
     }
 }

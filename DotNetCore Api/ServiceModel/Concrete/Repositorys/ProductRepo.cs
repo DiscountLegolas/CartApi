@@ -18,7 +18,7 @@ namespace DotNetCore_Api.Repotutories.Concrete
         {
             context.Database.EnsureCreated();
             _context = context;
-            _products = _context.Products.Include(x => x.Kategori).Include(x => x.Marka).ToList();
+            _products = _context.Products.Include(x => x.Kategori).Include(x => x.Marka).Include(x=>x.Özelliks).ThenInclude(x=>x.Özellik).ToList();
         }
         public void AddProduct(Product product)
         {
